@@ -15,9 +15,9 @@
   function applyImprovedGlassEffect() {
     const element = document.querySelector('.page.page-root.simple-pjax');
 
-    element.style.background = 'rgba(255, 255, 255, 0.2)';
-    element.style.backdropFilter = 'blur(20px)';
-    element.style.webkitBackdropFilter = 'blur(20px)';
+    element.style.background = 'rgba(255, 255, 255, 0.7)';
+    element.style.backdropFilter = 'blur(8px)';
+    element.style.webkitBackdropFilter = 'blur(8px)';
     element.style.border = '1px solid rgba(255, 255, 255, 0.8)';
     element.style.borderRadius = '8px';
     element.style.boxShadow = '0 4px 20px 0 rgba(0, 0, 0, 0.1)';
@@ -43,4 +43,17 @@
   } else {
     applyImprovedGlassEffect();
   }
+  // 监听pushState和replaceState（SPA路由变化）
+  const originalPushState = history.pushState;
+  const originalReplaceState = history.replaceState;
+
+  history.pushState = function () {
+    originalPushState.apply(history, arguments);
+    setTimeout(applyImprovedGlassEffect, 200);
+  };
+
+  history.replaceState = function () {
+    originalReplaceState.apply(history, arguments);
+    setTimeout(applyImprovedGlassEffect, 200);
+  };
 })();
